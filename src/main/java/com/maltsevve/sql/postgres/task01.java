@@ -1,15 +1,29 @@
-package com.maltsevve.sql;
+package com.maltsevve.sql.postgres;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class task01 {
     public static void main(String[] args) {
         DataBaseConnector dataBaseConnector = new DataBaseConnector(createTable(), request(), drop());
 
-//        dataBaseConnector.createTable();
+        dataBaseConnector.createTable();
 
-        dataBaseConnector.printRequest(dataBaseConnector.sendRequest());
+        ResultSet resultSet = dataBaseConnector.sendRequest();
+        try {
+            while (resultSet.next()) {
+                System.out.println(
+                        resultSet.getRow() + ": " +
+                                resultSet.getString("firstname") + " " +
+                                resultSet.getString("lastname") + " - " +
+                                resultSet.getString("city") + ", " +
+                                resultSet.getString("state"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
-//        dataBaseConnector.dropTable();
-
+        dataBaseConnector.dropTable();
     }
 
     private static String createTable() {

@@ -1,4 +1,4 @@
-package com.maltsevve.sql;
+package com.maltsevve.sql.postgres;
 
 import lombok.*;
 
@@ -28,8 +28,7 @@ public class DataBaseConnector {
     public void createTable() {
         try {
             Statement statement = connect().createStatement();
-            statement.executeQuery(create);
-            connect().endRequest();
+            statement.execute(create);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -48,22 +47,10 @@ public class DataBaseConnector {
         return resultSet;
     }
 
-    public void printRequest(ResultSet resultSet) {
-        try {
-            while (resultSet.next()) {
-                System.out.println(resultSet.getRow() + ": " + resultSet.getString("firstname") + " " +
-                        resultSet.getString("lastname") + " - " + resultSet.getString("city")
-                        + ", " + resultSet.getString("state"));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
     public void dropTable() {
         try {
             Statement statement = connect().createStatement();
-            statement.executeQuery(drop);
+            statement.execute(drop);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
