@@ -26,8 +26,7 @@ public class DataBaseConnector {
     }
 
     public void createTable() {
-        try {
-            Statement statement = connect().createStatement();
+        try (Statement statement = connect().createStatement()){
             statement.execute(create);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -38,7 +37,6 @@ public class DataBaseConnector {
         ResultSet resultSet = null;
         try {
             Statement statement = connect().createStatement();
-            statement.executeQuery(request);
             resultSet = statement.executeQuery(request);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -48,8 +46,7 @@ public class DataBaseConnector {
     }
 
     public void dropTable() {
-        try {
-            Statement statement = connect().createStatement();
+        try (Statement statement = connect().createStatement()){
             statement.execute(drop);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
